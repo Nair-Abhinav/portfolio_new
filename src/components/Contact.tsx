@@ -61,7 +61,7 @@ export default function Contact() {
               
               <div className="space-y-6">
                 <motion.a
-                  href="mailto:contact@example.com"
+                  href="mailto:abhinavnair7404@gmail.com"
                   className="flex items-center gap-4 text-white/90 hover:text-white transition-colors group"
                   whileHover={{ x: 5 }}
                 >
@@ -70,12 +70,12 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="font-medium">Email</div>
-                    <div className="text-sm">contact@example.com</div>
+                    <div className="text-sm">abhinavnair7404@gmail.com</div>
                   </div>
                 </motion.a>
                 
                 <motion.a
-                  href="tel:+1234567890"
+                  href="tel:+918530335907"
                   className="flex items-center gap-4 text-white/90 hover:text-white transition-colors group"
                   whileHover={{ x: 5 }}
                 >
@@ -84,7 +84,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="font-medium">Phone</div>
-                    <div className="text-sm">+1 (234) 567-890</div>
+                    <div className="text-sm">+91 8530335907</div>
                   </div>
                 </motion.a>
                 
@@ -97,14 +97,14 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="font-medium">Location</div>
-                    <div className="text-sm">San Francisco, CA</div>
+                    <div className="text-sm">Mumbai, India</div>
                   </div>
                 </motion.div>
               </div>
 
               <div className="flex gap-4 mt-8">
                 <motion.a
-                  href="https://github.com"
+                  href="https://github.com/Nair-Abhinav"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1 }}
@@ -114,7 +114,7 @@ export default function Contact() {
                   <Github size={20} className="text-white" />
                 </motion.a>
                 <motion.a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/abhinav-nair-abc1234/"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1 }}
