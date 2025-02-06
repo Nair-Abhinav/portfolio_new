@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Github, ExternalLink, X, Code, Globe, Layers } from 'lucide-react';
+import { Github, ExternalLink, X, Code, Globe, Layers, Rocket, Zap, Monitor } from 'lucide-react';
 
 interface Project {
   title: string;
@@ -11,6 +11,7 @@ interface Project {
   github: string;
   live: string;
   category: 'web' | 'mobile' | 'other';
+  color: string;
 }
 
 const projects: Project[] = [
@@ -21,7 +22,8 @@ const projects: Project[] = [
     tech: ["React", "Node.js", "MongoDB", "Stripe"],
     github: "https://github.com",
     live: "https://example.com",
-    category: 'web'
+    category: 'web',
+    color: "from-blue-500 to-cyan-500"
   },
   {
     title: "Task Management App",
@@ -30,7 +32,8 @@ const projects: Project[] = [
     tech: ["React", "Firebase", "Material-UI"],
     github: "https://github.com",
     live: "https://example.com",
-    category: 'mobile'
+    category: 'mobile',
+    color: "from-purple-500 to-pink-500"
   },
   {
     title: "AI Image Generator",
@@ -39,8 +42,16 @@ const projects: Project[] = [
     tech: ["Python", "TensorFlow", "React"],
     github: "https://github.com",
     live: "https://example.com",
-    category: 'other'
+    category: 'other',
+    color: "from-yellow-500 to-orange-500"
   }
+];
+
+const categories = [
+  { id: 'all', label: 'All Projects', icon: Layers },
+  { id: 'web', label: 'Web Apps', icon: Globe },
+  { id: 'mobile', label: 'Mobile Apps', icon: Monitor },
+  { id: 'other', label: 'Other', icon: Rocket }
 ];
 
 export default function Projects() {
@@ -56,34 +67,44 @@ export default function Projects() {
     project => filter === 'all' || project.category === filter
   );
 
-  const categories = [
-    { id: 'all', label: 'All Projects', icon: Layers },
-    { id: 'web', label: 'Web Apps', icon: Globe },
-    { id: 'mobile', label: 'Mobile Apps', icon: Code },
-    { id: 'other', label: 'Other', icon: Code }
-  ];
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
 
   return (
-    <section ref={ref} className="relative py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800">
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+    <section ref={ref} className="relative py-32 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.3),transparent_40%),radial-gradient(circle_at_bottom_left,rgba(219,39,119,0.3),transparent_40%)]" />
       
-      {/* Floating Particles */}
+      {/* Enhanced Floating Particles */}
       <div className="absolute inset-0">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-white rounded-full"
             initial={{
               x: Math.random() * window.innerWidth,
               y: Math.random() * window.innerHeight,
+              scale: Math.random() * 0.5 + 0.5,
               opacity: Math.random() * 0.5 + 0.3,
             }}
             animate={{
               y: [null, Math.random() * window.innerHeight],
+              x: [null, Math.random() * window.innerWidth],
               opacity: [null, Math.random() * 0.5 + 0.3],
             }}
             transition={{
-              duration: Math.random() * 10 + 10,
+              duration: Math.random() * 20 + 10,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -92,74 +113,105 @@ export default function Projects() {
       </div>
 
       <div className="container relative z-10 mx-auto px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200"
-        >
-          Featured Projects
-        </motion.h2>
-
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2 }}
-          className="flex justify-center gap-4 mb-12"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          className="max-w-7xl mx-auto"
         >
-          {categories.map(({ id, label, icon: Icon }) => (
-            <motion.button
-              key={id}
-              onClick={() => setFilter(id as any)}
-              className={`px-6 py-2 rounded-full flex items-center gap-2 transition-all
-                ${filter === id 
-                  ? 'bg-white text-indigo-900 shadow-lg' 
-                  : 'bg-white/10 text-white hover:bg-white/20'}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Icon size={16} />
-              {label}
-            </motion.button>
-          ))}
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.title}
+          <div className="text-center mb-20">
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1 }}
-              className="group relative bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden"
-              whileHover={{ y: -5 }}
+              className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 mb-6 animate-text-gradient"
             >
-              <div className="relative h-48">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map(tech => (
-                    <span key={tech} className="px-2 py-1 text-sm bg-white/20 rounded-full text-white">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  className="mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors w-full"
+              Featured Projects
+            </motion.h2>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={inView ? { width: '200px' } : {}}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-16"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.2 }}
+              className="flex flex-wrap justify-center gap-4 mb-16"
+            >
+              {categories.map(({ id, label, icon: Icon }) => (
+                <motion.button
+                  key={id}
+                  onClick={() => setFilter(id as any)}
+                  className={`px-6 py-3 rounded-xl flex items-center gap-2 transition-all ${
+                    filter === id 
+                      ? 'bg-white text-indigo-900 shadow-lg glow' 
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  View Details
-                </button>
-              </div>
+                  <Icon size={18} />
+                  {label}
+                </motion.button>
+              ))}
             </motion.div>
-          ))}
-        </div>
+          </div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={inView ? "show" : "hidden"}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {filteredProjects.map((project) => (
+              <motion.div
+                key={project.title}
+                variants={itemVariants}
+                className="group relative"
+              >
+                <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                  <div className="relative h-64">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <motion.div
+                      initial={false}
+                      animate={{ opacity: 1 }}
+                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="px-6 py-3 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white rounded-xl transition-all transform hover:scale-105"
+                      >
+                        View Details
+                      </button>
+                    </motion.div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tech.map(tech => (
+                        <span
+                          key={tech}
+                          className={`px-3 py-1 text-sm rounded-full bg-gradient-to-r ${project.color} text-white`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-white/80 line-clamp-2">{project.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
 
         <AnimatePresence>
           {selectedProject && (
@@ -171,54 +223,83 @@ export default function Projects() {
               onClick={() => setSelectedProject(null)}
             >
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="bg-gradient-to-br from-indigo-900 to-purple-900 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                className="bg-gradient-to-br from-indigo-900 to-purple-900 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={e => e.stopPropagation()}
               >
-                <div className="p-6">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-2xl font-bold text-white">{selectedProject.title}</h3>
+                <div className="p-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <motion.h3
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-3xl font-bold text-white"
+                    >
+                      {selectedProject.title}
+                    </motion.h3>
                     <button
                       onClick={() => setSelectedProject(null)}
-                      className="text-white/70 hover:text-white"
+                      className="text-white/70 hover:text-white transition-colors"
                     >
                       <X size={24} />
                     </button>
                   </div>
-                  <img
+                  
+                  <motion.img
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     src={selectedProject.image}
                     alt={selectedProject.title}
-                    className="w-full h-64 object-cover rounded-lg mb-4"
+                    className="w-full h-80 object-cover rounded-xl mb-6"
                   />
-                  <p className="text-white/90 mb-4">{selectedProject.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-lg text-white/90 mb-6"
+                  >
+                    {selectedProject.description}
+                  </motion.p>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-wrap gap-3 mb-8"
+                  >
                     {selectedProject.tech.map(tech => (
-                      <span key={tech} className="px-3 py-1 bg-white/10 rounded-full text-white">
+                      <span
+                        key={tech}
+                        className={`px-4 py-2 rounded-xl bg-gradient-to-r ${selectedProject.color} text-white`}
+                      >
                         {tech}
                       </span>
                     ))}
-                  </div>
+                  </motion.div>
+                  
                   <div className="flex gap-4">
-                    <a
+                    <motion.a
                       href={selectedProject.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-white/90 hover:text-white"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
                     >
                       <Github size={20} />
                       <span>View Code</span>
-                    </a>
-                    <a
+                    </motion.a>
+                    <motion.a
                       href={selectedProject.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-white/90 hover:text-white"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
                     >
                       <ExternalLink size={20} />
                       <span>Live Demo</span>
-                    </a>
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>
