@@ -10,42 +10,53 @@ interface Project {
   tech: string[];
   github: string;
   live: string;
-  category: 'web' | 'mobile' | 'other';
+  category: 'web' | 'ML' | 'other';
   color: string;
 }
 
 const projects: Project[] = [
   {
-    title: "E-Commerce Platform",
-    description: "A full-featured e-commerce platform built with React and Node.js. Includes user authentication, product management, and payment integration.",
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80",
-    tech: ["React", "Node.js", "MongoDB", "Stripe"],
+    title: "Ride-Sharing Platform",
+    description: "Developed a full-stack ride-sharing platform with real-time ride booking, driver management, and geolocation-based tracking using Google Maps API. Integrated secure user authentication, payment gateway, and dynamic fare calculations. Designed an admin panel for trip management and analytics.",
+    image: "https://images.unsplash.com/photo-1578926375605-eaf7559b1459?auto=format&fit=crop&w=800&q=80",
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "Google Maps API", "Docker"],
     github: "https://github.com",
     live: "https://example.com",
-    category: 'web',
-    color: "from-blue-500 to-cyan-500"
+    category: "web",
+    color: "from-green-500 to-teal-500"
   },
   {
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates and team features.",
-    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80",
-    tech: ["React", "Firebase", "Material-UI"],
+    title: "Forged Signature Detection AI Agent",
+    description: "A Convolutional Neural Network (CNN)-based AI model that detects forged signatures by classifying them as genuine or forged. Includes data preprocessing, augmentation, and evaluation metrics like accuracy and precision.",
+    image: "https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=800&q=80",
+    tech: ["TensorFlow", "Keras", "Python", "CNN"],
     github: "https://github.com",
     live: "https://example.com",
-    category: 'mobile',
+    category: "ML",
     color: "from-purple-500 to-pink-500"
   },
   {
-    title: "AI Image Generator",
-    description: "An AI-powered image generation tool using state-of-the-art machine learning models.",
-    image: "https://images.unsplash.com/photo-1547954575-855750c57bd3?auto=format&fit=crop&w=800&q=80",
-    tech: ["Python", "TensorFlow", "React"],
+    title: "DJIniT.AI Website",
+    description: "Led the technical team for DJIniT.ai and developed the club’s website using ReactJS, Tailwind CSS, and Node.js. Utilized MongoDB and Cloudinary for data and image storage. Hosted on Netlify.",
+    image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=80",
+    tech: ["React", "Node.js", "MongoDB", "Tailwind CSS", "Cloudinary"],
     github: "https://github.com",
     live: "https://example.com",
-    category: 'other',
+    category: "web",
+    color: "from-blue-500 to-cyan-500"
+  },
+  {
+    title: "Exam Management System",
+    description: "Department-level project focused on automating exam management tasks, including attendance tracking, timetable generation, student record management, and a professor portal for scheduling and seating arrangements.",
+    image: "https://images.unsplash.com/photo-1584697964192-871c61340d5e?auto=format&fit=crop&w=800&q=80",
+    tech: ["MongoDB", "ReactJS", "Node.js"],
+    github: "https://github.com",
+    live: "https://example.com",
+    category: "web",
     color: "from-yellow-500 to-orange-500"
   }
 ];
+
 
 const categories = [
   { id: 'all', label: 'All Projects', icon: Layers },
